@@ -1,8 +1,10 @@
-# Yue Chang's Site Entry
+# Yue Chang's Homepage Redirect
 
-This static entry page is intended for `https://cyandyue.github.io/`. The full
-academic homepage stays at `https://cyandyue.github.io/HomePage/`; publications
-and news continue to be maintained in the `HomePage` repository only.
+This static page redirects `https://cyandyue.github.io/` immediately to
+`https://cyandyue.github.io/HomePage/` using an HTML meta refresh. JavaScript is
+not required, and a visible link provides a fallback. The full academic
+homepage, publications, and news continue to be maintained in the `HomePage`
+repository only.
 
 ## Publishing
 
@@ -16,15 +18,19 @@ name will replace GitHub's old-name redirect for that repository URL.
 
 Before publishing, verify that this directory will be hosted at the root URL,
 not under `/HomePage/` or another project path. The root page should return
-HTTP 200 and remain crawlable. Its canonical URL points to itself, while the
-academic homepage retains its existing canonical URL.
+HTTP 200 with the immediate client-side redirect; this is not an HTTP 301
+response. Both its canonical and Open Graph URLs point to `/HomePage/`, which
+retains its existing self-referencing canonical URL. Do not install this
+redirect in the `HomePage` repository, since that would create a redirect loop.
 
 The page provides `WebSite` structured data and `og:site_name` with the preferred
 name configured in `index.html`. It references the existing homepage favicon, so no
-second image copy needs to be maintained. This is a site-name preference for
-Google, not a guarantee of the search result wording.
+second image copy needs to be maintained. Google may follow the redirect and
+use the destination page rather than the root page's metadata. These settings
+do not guarantee a change to the search site name or icon.
 
-After deployment, use a Search Console property covering the root URL to
-request indexing of `https://cyandyue.github.io/`. A URL-prefix property limited
-to `/HomePage/` does not cover the root page. Google must recrawl and process
-the root page before the search site name or icon can change.
+After deployment, check that opening the root URL reaches `/HomePage/`, then
+request indexing of the academic homepage in Search Console. A root URL
+reported as "Page with redirect" is expected and does not mean the academic
+homepage has failed. Inspecting the root URL itself requires a Search Console
+property covering it; a URL-prefix property limited to `/HomePage/` does not.
